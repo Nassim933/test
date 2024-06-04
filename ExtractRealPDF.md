@@ -31,4 +31,4 @@ La fonction "extract_text" prend entrée la page en cours de traitement, son nom
 Cette classe permet de gérer toutes les fonctions qui commnuniquent avec d'autres applications. Ici, on l'utilise pour communiquer avec les applications **"Convert PDF to Image"**, **"Segmentation Image to Blocks"**, **"OCR Text"**, **"OCR Figure"**, **"OCR Table"** et **"Text Correction"**.
 
 
-![alt text](<Capture d’écran 2024-06-04 à 15.12.45.png>)
+![alt text](<Extract_real_pdf_graph.png>)
