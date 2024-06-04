@@ -24,14 +24,6 @@ Pour toutes les pages du document, on vérifie si une image est présente dans l
 
 Cette classe permet de gérer toutes les fonctions qui commnuniquent avec d'autres applications. Ici, on l'utilise pour communiquer avec les applications **"Extract Real PDF"**, **"Extract Scan PDF"**  et **"Assembler Block"**.
 
-```mermaid
-flowchart  TD;
-A[PDF]-->B[Check Type];
-B-- Scan PDF?-->C[Extract Scan PDF];
-B-- Real PDF?-->D[Extract Real PDF];
-C-->E[Task Manager];
-D-->E[Task Manager];
-E-->F[Assembler Block];
-```
+![alt text](<ExtractPDF_graph.png>)
 
 
