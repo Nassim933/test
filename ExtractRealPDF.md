@@ -31,28 +31,4 @@ La fonction "extract_text" prend entrée la page en cours de traitement, son nom
 Cette classe permet de gérer toutes les fonctions qui commnuniquent avec d'autres applications. Ici, on l'utilise pour communiquer avec les applications **"Convert PDF to Image"**, **"Segmentation Image to Blocks"**, **"OCR Text"**, **"OCR Figure"**, **"OCR Table"** et **"Text Correction"**.
 
 
-```mermaid
-flowchart  TD;
-A[PDF + List Page]-->B[Handle One Page];
-B-->C[PDF to IMG];
-C-->D[Segmentation];
-D-- Graph ?-->E[OCR];
-D-- No Graph?-->F[Extract Real PDF];
-E-->G[OCR Text];
-E-->H[OCR Table];
-E-->I[OCR Figure];
-G-->M[Correction];
-M-->P[Result];
-H-->P;
-I-->P;
-F-->J[Extract Text];
-F-->K[OCR Table];
-F-->L[OCR Figure];
-J-->N[Remove Line Break];
-N-->Q[Result];
-K-->Q;
-L-->Q;
-P-->R[Final Result];
-Q-->R;
-```
-(![alt text](<Capture d’écran 2024-06-04 à 15.12.45.png>))
+![alt text](<Capture d’écran 2024-06-04 à 15.12.45.png>)
