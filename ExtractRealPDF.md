@@ -55,3 +55,4 @@ L-->Q;
 P-->R[Final Result];
 Q-->R;
 ```
+(![alt text](<Capture d’écran 2024-06-04 à 15.12.45.png>))
