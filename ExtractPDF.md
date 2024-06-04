@@ -24,6 +24,6 @@ Pour toutes les pages du document, on vérifie si une image est présente dans l
 
 Cette classe permet de gérer toutes les fonctions qui commnuniquent avec d'autres applications. Ici, on l'utilise pour communiquer avec les applications **"Extract Real PDF"**, **"Extract Scan PDF"**  et **"Assembler Block"**.
 
-![alt text](<ExtractPDF_graph.png>)
+![alt text](<Graph/ExtractPDF_graph.png>)
 
 
