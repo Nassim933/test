@@ -2,7 +2,7 @@
 
 ### Description
 
-Cette application traite l'extraction du contenu des fichiers PDF.
+This application allows us to extract content from PDF files.
 
 ### Library requirements
 
@@ -23,7 +23,7 @@ or
 pip install -r requirements.txt
 ```
 
-And you can now test the app locally:
+And now you can launch the app locally:
 
 ```agsl
 python3 app.py
@@ -98,8 +98,7 @@ dictionnaire avec la clé "real_pdf".
 
 #### 2. Send Request
 
-According to the result analyzed by ***CheckType***, we will add ***Extract Real PDF*** and ***Extract Scan PDF*** task into a list, to get text result of each page asynchronously.
-
+Based on the results analyzed by **_CheckType_**, we will put the **_Extract Real PDF_** and **_Extract Scan PDF_** tasks into a list to obtain the final results of each page asynchronously.
 #### Input:
 * PDF file page number, example: 4 or 9
 * PDF file pages read by *pdfplumber*
