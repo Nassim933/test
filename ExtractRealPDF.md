@@ -4,11 +4,11 @@
 
 ## Sortie : Liste de String
 
-Cette application traite l'extraction du contenu des pages du fichier PDF considérées comme "vraie PDF".
+Cette application traite l'extraction du contenu des pages du fichier PDF considérées comme "vrai PDF".
 
 ### Controller 
 
-Le fichier PDF est envoyé à la classe **"Controller"** ainsi que la liste des numéros des pages détéctées comme "vraie PDF". 
+Le fichier PDF est envoyé à la classe **"Controller"** ainsi que la liste des numéros des pages détéctées comme "vrai PDF". 
 
 #### handle_request
 
