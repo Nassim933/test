@@ -77,10 +77,6 @@ a string list of content recognition
 ]
 ```
 
-## Entrée :  PDF file + liste des numéros de page
-
-## Sortie : Liste de String
-
 ### Controller
 
 ![alt text](<Graph/Extract_real_pdf_graphe.png>)

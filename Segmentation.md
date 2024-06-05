@@ -44,7 +44,7 @@ python segmentation-image-to-block.py
 ### port: 8002
 
 ### Headers :
-"Content-Type": "multipart/raw"
+"Content-Type": "application/json"
 
 ### Input:
 Key: "file_name"
