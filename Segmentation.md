@@ -2,7 +2,7 @@
 
 ## Description
 
-Cette application traite le segmentation de l'image d'une page du fichier PDF en plusieurs blocks d'image grâce à un modèle de détection d'objet. 
+This application processes the segmentation of a PDF page image into several image blocks using an object detection model. 
 
 ## Library requirements
 
@@ -47,14 +47,23 @@ python segmentation-image-to-block.py
 "Content-Type": "application/json"
 
 ### Input:
-Key: "file_name"
-Value : image base 64
+image base 64
+
+#### Example:
+
+```json
+{
+    "file_name" : "test",
+    "file_content" : "JVBERi0xLjMKJcTl8uXrp/Og0MTGCjMgMCBvYmoKPDwgL0ZpbHRlciAvRmxhdGVEZWNvZGUgL0xlbmd0aCA2MCA+PgpzdHJlYW0KeAErVAhUKFTQD0gtSk4tKClNzFEoygQKmJpYKBgAobGZhYKxkYKRoZFCcq6CvmeuoYJLPlBLIAC+1Q6bCmVuZHN0cmVhbQplbmRvYmoKMSAwIG9iago8PCAvVHlwZSAvUGFnZSAvUGFyZW50IDIgMCBSIC9SZXNvdXJjZXMgNCAwIFIgL0NvbnRlbnRzIDMgMCBSIC9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4"
+}
+```
 
 ### Output :
 JSON {"type de block(text,table,figure)" : {"image base 64" + bbox coordonnées}}
 
+#### Example:
 
-```
+```json
 {
     "text_blocks": {
         "R0Y0T0dFRDZESUZSNVdIQUJIVExTVEZWNzY1NkdLTjMucGRm—5291c32235e6bbc6b2aeee0ad0ebb7d6bd69d234f1f740e2b95bcc366e541f58—page1—text—1": [
@@ -94,7 +103,7 @@ JSON {"type de block(text,table,figure)" : {"image base 64" + bbox coordonnées}
 
 ### handle_request
 
-La fonction "handle_request" prend en entrée le nom de l'image ainsi que l'image en base 64 et retourne un JSON avec en clé le type du block et en valeur l'image du block en base 64. L'image en entrée est décodé puis convertie en Numpy Array pour être donnée à la fonction "predict". Ensuite, pour tous les éléments dans la sortie de la fonction précédente, les coordonnées des bounding box (bbox) sont stockées ainsi que les ID des types des bbox. Enfin, en fonction des ID, l'image, convertie en niveau de gris puis en base 64 par la fonction "grey_and_encode_base64", ainsi que ses coordonnées sont stockées dans une liste.
+The "handle_request" function takes as input the image name and the base 64 encoded image, and returns a JSON with the block type as key and the block image in base 64 as value. The input image is decoded and then converted to a Numpy Array to be given to the "predict" function. Then, for all elements in the output of the previous function, the bounding box (bbox) coordinates are stored along with the bbox type IDs. Finally, based on the IDs, the image, converted to grayscale and then base 64 encoded by the "grey_and_encode_base64" function, along with its coordinates, are stored in a list.
 
 ### predict
 
@@ -104,10 +113,10 @@ image
 #### Output:
 Result Model
 
-La fonction "predict" va tout d'abord prédire le resultat de la détection des textes, tableaux et images présents sur la page. Le résultat va passer dans la fonction être trié en fonction des "y" puis envoyé à la fonction "clear_all_result" afin de garder seulement les bbox de text, tableau, image et graphe. Il sera ensuite envoyé à la fonction "reorder_image_list_with_xy".
-
+The "predict" function will first predict the result of detecting text, tables, and images present on the page. The result will pass through the function to be sorted according to "y" and then sent to the "clear_all_result" function to keep only the bbox of text, tables, images, and graphs. It will then be sent to the "reorder_image_list_with_xy" function.
 
 ### reorder_image_list_with_xy
 
-La fonction "reorder_image_list_with_xy" prend en entrée le résultat de la prédiction trié en fonction des "y" et retourne une liste avec les résultats ordonnées en fonction des "x" et des "y". Tout d'abord, la valeur de la première détection sera stockée puis comparée grâce à la fonction "find_all_same_value_in_list" afin d'ordonner toute les bbox dans le bon sens de lecture. 
+The "reorder_image_list_with_xy" function takes as input the prediction result sorted according to "y" and returns a list with the results ordered according to "x" and "y". First, the value of the first detection will be stored and then compared using the "find_all_same_value_in_list" function to order all the bboxes in the correct reading direction.
+
 

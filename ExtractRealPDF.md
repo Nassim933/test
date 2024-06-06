@@ -81,36 +81,36 @@ a string list of content recognition
 
 ![alt text](<Graph/Extract_real_pdf_graphe.png>)
 
-Le fichier PDF est envoyé à la classe **"Controller"** ainsi que la liste des numéros des pages détéctées comme "vrai PDF".
+The PDF file is sent to the **"Controller"** class along with the list of page numbers detected as "real PDF".
 
 #### handle_request
 
-La fonction "handle_request" prend en entrée la liste des numéros de page et le fichier PDF et retourne en sortie le résultat de l'extraction du contenue. Le nom du fichier est convertie en base 64 (pour éviter les erreurs à cause des espaces et des caractères spéciaux). On va ensuite attribuer un identifiant unique au nom du fichier avec la fonction "generate_pdf_hash". Pour toutes les pages qui se trouvent dans la liste, on envoie le fichier, le numéro de page, le nom du fichier en base 64 et l'ID du fichier à la fonction "handle_one_page".Enfin, les résulats de cette fonction seront stockés dans une liste.
+The "handle_request" function takes the list of page numbers and the PDF file as input and returns the extraction result as output. The file name is converted to base 64 (to avoid errors due to spaces and special characters). A unique identifier is then assigned to the file name using the "generate_pdf_hash" function. For all the pages in the list, the file, page number, base 64 file name, and file ID are sent to the "handle_one_page" function. Finally, the results of this function are stored in a list.
 
 #### handle_one_page
 
-La fonction "handle_one_page" retourne le résultat de l'extraction pour une seul page. Elle va tout d'abord appeler la fonction "pdf_to_img_and_segmentation" afin de segmenter la page en blocks de textes, tableaux, images et graphiques. S'il y a des graphes présents dans la page, les éléments précédents sont envoyés à la fonction "ocr_correction_image_to_texte". Sinon, les éléments sont envoyés à la classe **_"Exctract Real PDF"_**. Le résultat est stocké dans une liste.
+The "handle_one_page" function returns the extraction result for a single page. It first calls the "pdf_to_img_and_segmentation" function to segment the page into text blocks, tables, images, and graphics. If there are graphs present on the page, the previous elements are sent to the "ocr_correction_image_to_text" function. Otherwise, the elements are sent to the **"Extract Real PDF"** class. The result is stored in a list.
 
 #### pdf_to_img_and_segmentation
 
-La fonction "pdf_to_img_and_segmentation" prend en entrée le fichier PDF et le numéro de la page qui est en cours de traitement. Elle retourne le résultat de la segementation. Le fichier PDF sera tout d'abord convertie en base 64 pour être envoyé à l'application **"Convert PDF to Image"** afin de convertir les pages du PDF en images. Cela permettra d'effectuer la segmentation en envoyant l'images de la page à l'application **"Segmentation Image to Blocks"**.
+The "pdf_to_img_and_segmentation" function takes the PDF file and the page number being processed as input. It returns the segmentation result. The PDF file is first converted to base 64 to be sent to the **"Convert PDF to Image"** application to convert the PDF pages into images. This allows for segmentation by sending the page image to the **"Segmentation Image to Blocks"** application.
 
-#### ocr_and_correction_image_to_texte
+#### ocr_and_correction_image_to_text
 
-La fonction "ocr_and_correction_image_to_texte" prend en entrée les blocks résultants de la segmentation et retourne une liste des résultats. Elle permet d'effectuer l'extraction du contenu des pages en fonctions du type de chaque block (texte, tableau, image, graphe). Si c'est un texte, le contenu est envoyé à la fonction "ocr_and_correction". Si c'est un tableau, le contenu est envoyé à l'application **"OCR Table"**. Si c'est une image ou un graphe, le contenu est envoyé à l'application **"OCR Figure"**. Ensuite, tous les résultats sont stockés dans une liste.
+The "ocr_and_correction_image_to_text" function takes the resulting blocks from segmentation as input and returns a list of results. It performs content extraction from the pages based on the type of each block (text, table, image, graph). If it is text, the content is sent to the "ocr_and_correction" function. If it is a table, the content is sent to the **"OCR Table"** application. If it is an image or graph, the content is sent to the **"OCR Figure"** application. Then, all results are stored in a list.
 
 #### ocr_and_correction
 
-La fonction "ocr_and_correction" prend en entrée le nom et le contenu du block de texte à extraire et retourne le résultat de l'extraction. Elle va tout d'abord envoyer l'entrée à l'application **"OCR Text"** et ensuite, le résultat sera envoyé à l'application **"Text Correction"**. C'est donc le resultat de la correction qui sera retourné.
+The "ocr_and_correction" function takes the name and content of the text block to be extracted as input and returns the extraction result. It first sends the input to the **"OCR Text"** application and then the result is sent to the **"Text Correction"** application. The corrected result is returned.
 
 ### Extract Real PDF
 
-Les pages qui ne contiennent pas de graphes sont envoyées à la classe **"Extract Real PDF"** pour extraire le contenu de la page.
+Pages that do not contain graphs are sent to the **"Extract Real PDF"** class to extract the content of the page.
 
 #### extract_text
 
-La fonction "extract_text" prend entrée la page en cours de traitement, son nom ainsi que les blocks de tableau et d'image résultant de la segmentation. Elle retourne un JSON avec le nom de la page en clé et le résultat de l'extraction en valeur. Cette fonction va extraire tout d'abord les textes. Pour cela, on va envoyer le contenu de la page à la fonction "deduplicate_text" afin d'extraire le texte de la page et de garder seulement une fois les mots qui se sont dupliqués successivement. Elle retournera les textes dans une liste de string. La liste est envoyée à la fonction "supprimer_sauts_de_ligne" afin de garder la continuité des phrases sur la même ligne. Les blocks de tableau sont envoyés à l'application **"OCR Table"** et les blocks d'image sont envoyés à l'application **"OCR Figure"**. Ensuite, les résultats sont filtrés pour remonter les potentielles erreurs d'extraction en fonction des applications utilisées. Les résultats filtrés sont enfin stockés dans une liste puis retournés en JSON.
+The "extract_text" function takes the page being processed, its name, and the table and image blocks resulting from segmentation as input. It returns a JSON with the page name as the key and the extraction result as the value. This function first extracts the texts. The content of the page is sent to the "deduplicate_text" function to extract the text and keep only once the words that were duplicated successively. It returns the texts in a list of strings. The list is sent to the "supprimer_sauts_de_ligne" function to maintain sentence continuity on the same line. The table blocks are sent to the **"OCR Table"** application and the image blocks are sent to the **"OCR Figure"** application. The results are then filtered to identify potential extraction errors based on the applications used. The filtered results are finally stored in a list and returned in JSON.
 
 ### Send Request
 
-Cette classe permet de gérer toutes les fonctions qui commnuniquent avec d'autres applications. Ici, on l'utilise pour communiquer avec les applications **"Convert PDF to Image"**, **"Segmentation Image to Blocks"**, **"OCR Text"**, **"OCR Figure"**, **"OCR Table"** et **"Text Correction"**.
+This class manages all functions that communicate with other applications. Here, it is used to communicate with the **"Convert PDF to Image"**, **"Segmentation Image to Blocks"**, **"OCR Text"**, **"OCR Figure"**, **"OCR Table"**, and **"Text Correction"** applications.

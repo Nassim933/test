@@ -1,8 +1,7 @@
 # Extract Scan PDF
 
 ### Description
-
-Cette application traite l'extraction du contenu des pages du fichier PDF considérées comme "PDF scannés ".
+This application handles the extraction of the content of PDF file pages considered as "scanned PDF".
 
 ### Library requirements
 
@@ -80,25 +79,24 @@ a string list of content recognition
 
 ![alt text](<Graph/Exctract_scan_graph.png>)
 
-Le nom et le corps du fichier PDF sont envoyés à la classe **"Controller"** ainsi que la liste des numéros des pages détéctées comme "PDF scannés". Le PDF sera divisé en block de 10 pages à traiter en même temps. Il est ensuite convertie en base 64 pour être envoyé à fonction "all_ocr_process".
+The name and body of the PDF file are sent to the **"Controller"** class along with the list of page numbers detected as "scanned PDFs". The PDF will be divided into blocks of 10 pages to be processed simultaneously. It is then converted to base 64 to be sent to the "all_ocr_process" function.
 
 #### all_ocr_process
 
-La fonction "all_ocr_process" prend en entrée le nom du PDF, le PDF en base 64 et la liste des numéros de pages et retourne la liste des résultats de l'extraction du contenu de fichier.  Elle va tout d'abord envoyer ces éléments à l'application **"Convert PDF to Image"**. Les images seront ensuite envoyées à la fonction "segementation_ocr_correction_image_to_text". 
+The "all_ocr_process" function takes the PDF name, the base 64 encoded PDF, and the list of page numbers as input and returns the list of content extraction results. It first sends these elements to the **"Convert PDF to Image"** application. The images are then sent to the "segmentation_ocr_correction_image_to_text" function.
 
-#### segementation_ocr_correction_image_to_text
+#### segmentation_ocr_correction_image_to_text
 
-La fonction "segementation_ocr_correction_image_to_text" prend entrée les images et retourne la liste des résultats de l'extraction du fichier. Les images sont envoyées à la fonction "process_image". Le résultat est ensuite remis dans une liste par block de 10 images. 
+The "segmentation_ocr_correction_image_to_text" function takes the images as input and returns the list of extraction results. The images are sent to the "process_image" function. The result is then organized into a list in blocks of 10 images.
 
 #### process_image
 
-La fonction "process_image" prend en entrée le nom de l'image et l'image elle-même. Elle est ensuite envoyée à l'application **"Segmentation Image to Blocks"**. Le résultat est stocké dans des variables séprarée pour tous les blocks de texte, tableau, image et graphe. Si c'est un texte, le contenu est envoyé à la fonction "ocr_and_correction". Si c'est un tableau, le contenu est envoyé à l'application **"OCR Table"**. Si c'est une image ou un graphe, le contenu est envoyé à l'application **"OCR Figure"**. Ensuite, tous les résultats sont stockés dans une liste. 
+The "process_image" function takes the image name and the image itself as input. It is then sent to the **"Segmentation Image to Blocks"** application. The result is stored in separate variables for all text blocks, tables, images, and graphs. If it is text, the content is sent to the "ocr_and_correction" function. If it is a table, the content is sent to the **"OCR Table"** application. If it is an image or graph, the content is sent to the **"OCR Figure"** application. Then, all results are stored in a list.
 
 #### ocr_and_correction
 
-La fonction "ocr_and_correction" prend en entrée le nom et le contenu du block de texte à extraire et retourne le résultat de l'extraction. Elle va tout d'abord envoyer l'entrée à l'application **"OCR Text"** et ensuite, le résultat sera envoyé à l'application **"Text Correction"**. C'est donc le resultat de la correction qui sera retourné. 
+The "ocr_and_correction" function takes the name and content of the text block to be extracted as input and returns the extraction result. It first sends the input to the **"OCR Text"** application and then the result is sent to the **"Text Correction"** application. The corrected result is returned.
 
 ## Send Request
 
-Cette classe permet de gérer toutes les fonctions qui commnuniquent avec d'autres applications. Ici, on l'utilise pour communiquer avec les applications **"Convert PDF to Image"**, **"Segmentation Image to Blocks"**, **"OCR Text"**, **"OCR Figure"**, **"OCR Table"** et **"Text Correction"**.
-
+This class manages all functions that communicate with other applications. Here, it is used to communicate with the **"Convert PDF to Image"**, **"Segmentation Image to Blocks"**, **"OCR Text"**, **"OCR Figure"**, **"OCR Table"**, and **"Text Correction"** applications.

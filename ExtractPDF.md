@@ -67,15 +67,9 @@ a string list of content recognition
 
 ![alt text](<Graph/ExtractPDF_graph.png>)
 
-Le fichier est envoyé à la classe **" Controller "** pour être analysé par la classe **" CheckType "** afin de
-déterminer si chaque page est considéré comme un vrai PDF (exploitable sans ocr) ou un PDF scanné (une image convertie
-en pdf).
+The file is sent to the **"Controller"** class to be analyzed by the **"CheckType"** class in order to determine whether each page is considered a real PDF (processable without OCR) or a scanned PDF (an image converted to PDF).
 
-Une fois analysé, la liste des pages des vrais PDF est envoyée grâce à la classe **"Send Request"** à l'application **"Extract Real PDF"** ainsi que le fichier PDF et la liste des pages des scans est envoyée à l'application **"Extract Scan
-PDF"** ainsi que le fichier PDF. Les résultats sont ensuite stockés dans une liste. La liste des résultats est donc
-envoyer à l'application **"Assembler Block"** pour être remis dans dans l'ordre initial grâce au numéro de page. Les
-résultats sont des textes qui sont stockés dans une liste. Une classe **"Task Manager"** est utilisée pour gérer le
-nombre de tâche qui sont traitées en même temps.
+Once analyzed, the list of real PDF pages is sent via the **"Send Request"** class to the **"ExtractRealPDF"** application along with the PDF file. The list of scanned pages is sent to the **"ExtractScanPDF"** application along with the PDF file. The results are then stored in a list. The list of results is sent to the **"AssemblerBlock"** application to be reordered according to the original page numbers. The results, which are texts, are stored in a list. A **"TaskManager"** class is used to manage the number of tasks being processed simultaneously.
 
 ### Main steps
 
@@ -93,11 +87,7 @@ A list of page number of scan pdf and real pdf
 type_pdf: {scan: [4,9], real_pdf: [0, 1, 2, 3, 5, 6, 7, 8, 10]}
 ```
 
-Pour toutes les pages du document, on vérifie si une image est présente dans la page et on la compare avec la taille de
-la page pour déterminer si c’est un scan ou pas. Si on trouve une image et que sa taille est supérieure ou égale à 90%
-de la taille de la page OU que la taille de l’image est inférieure à 5 pixels (car des fichiers protégés convertissent
-le texte en plusieurs pixels pour éviter la modification), alors, la page est considérée comme un scan et son numéro est
-stocké dans un dictionnaire avec la clé "scan". Sinon, la page est un vrai pdf et son numéro est stocké dans le dictionnaire avec la clé "real_pdf".
+For all the pages in the document, we check if an image is present on the page and compare its size with the size of the page to determine if it is a scan or not. If an image is found and its size is greater than or equal to 90% of the page size OR if the image size is less than 5 pixels (since protected files convert text into multiple pixels to prevent modification), then the page is considered a scan and its number is stored in a dictionary with the key "scan." Otherwise, the page is a real PDF and its number is stored in the dictionary with the key "real_pdf."
 
 #### 2. Send Request
 
