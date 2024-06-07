@@ -2,7 +2,7 @@
 
 ### Description
 
-Cette application traite l'extraction du contenu des pages du fichier PDF considérées comme "vrai PDF".
+This application handles the extraction of content from PDF file pages considered as “real PDF”.
 
 ### Library requirements
 
@@ -61,7 +61,7 @@ Value: a PDF file
 
 a string list of content recognition
 
-```
+```json
 [
     {
         "R0Y0T0dFRDZESUZSNVdIQUJIVExTVEZWNzY1NkdLTjMucGRm—7b6f4703747ebe5debe54647754e89f86695d19b7c5792e7ba81956ac63af664—page0": [
