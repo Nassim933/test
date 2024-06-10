@@ -97,7 +97,7 @@ The "pdf_to_img_and_segmentation" function takes the PDF file and the page numbe
 
 #### ocr_and_correction_image_to_text
 
-The "ocr_and_correction_image_to_text" function takes the resulting blocks from segmentation as input and returns a list of results. It performs content extraction from the pages based on the type of each block (text, table, image, graph). If it is text, the content is sent to the "ocr_and_correction" function. If it is a table, the content is sent to the **"OCR Table"** application. If it is an image or graph, the content is sent to the **"OCR Figure"** application. Then, all results are stored in a list.
+The "ocr_and_correction_image_to_text" function takes the resulting blocks from segmentation as input and returns a list of results. It performs content extraction from the pages based on the type of each block (text, table, image, graph). If it is text, the content is sent to the "ocr_and_correction" function. If it is a table, the content is sent to the **"OCR Table"** application. If it is an image or graph, the content is sent to the **"OCR Figure"** application. The image is also detected by the library PymuPDF. Then, all results are stored in a list.
 
 #### ocr_and_correction
 
