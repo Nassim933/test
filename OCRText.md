@@ -73,4 +73,4 @@ a string of content recognition
 }
 ```
 
-The **"OCR Text ”** class takes text block images as input, then Clause 3 extracts the text and returns the result as text.
+The **"OCR Text "** class takes text block images as input, then Clause 3 extracts the text and returns the result as text.

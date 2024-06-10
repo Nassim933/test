@@ -2,7 +2,7 @@
 
 ### Description
 
-This function is used to extract content from Word files.
+This application is used to extract content from Word files.
 
 ### Library requirements
 

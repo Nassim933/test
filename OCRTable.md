@@ -69,4 +69,4 @@ a string of content recognition
 }
 ```
 
-The **"OCR Table ”** class takes the table block images as input, then Clause 3 extracts the text and returns the result as text.
+The **"OCR Table "** class takes the table block images as input, then Clause 3 extracts the text and returns the result as text.

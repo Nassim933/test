@@ -2,7 +2,7 @@
 
 ### Description
 
-This function is used to extract content from Excel files.
+This application is used to extract content from Excel files.
 
 ### Library requirements
 
@@ -81,35 +81,34 @@ JSON with the file name and a string list of content recognition
 
 #### extract_excel
 
-La fonction "extract_excel" prend en entrée le fichier Excel et retourne le résultat de l'extraction. 
+The "extract_excel" function takes the Excel file as input and returns the extraction result.
 
-On va tout d'abord ouvrir le fichier grâce à la librairie _openpyxl_ puis pour toute les feuilles du classeur, si la feuille n'est pas vide (vérifié grâce à la fonction "is_sheet_empty"), on va convertir les éléments de la feuille en CSV grâce à la fonction "sheet_to_csv_string". Ensuite, on va nettoyer la feuille en supprimant les lignes vide qui se trouve au début grâce à la fonction "delete_void_line_in_front_of_sheet" puis en supprimant toutes les colonnes vides grâce à la fonction "delete_all_blank_columns". On va ensuite calculer le nombre de token grâce à la fonction "count_tokens" de la classe **"Token Calculator"** pour les comparer au nombre de token max prédéfini. Si le nombre de token de la feuille est inférieur au nombre de token max, le CSV est envoyé à la fonction "generate_message_content" (sans ancien message) afin de générer la structure attendu par l'application **"CSV Interpreter"** qui s'occupe de générer une explication détaillé de la feuille. Si le nombre max de token est dépassé, la feuille est envoyé à la fonction "extract_long_sheet_page".
+First, we open the file using the _openpyxl_ library. For each sheet in the workbook, if the sheet is not empty (checked using the "is_sheet_empty" function), we convert the sheet elements to CSV using the "sheet_to_csv_string" function. Then, we clean the sheet by deleting empty rows at the beginning with the "delete_void_line_in_front_of_sheet" function and by deleting all empty columns with the "delete_all_blank_columns" function. We then calculate the number of tokens using the "count_tokens" function from the **"Token Calculator"** class to compare it to the predefined maximum number of tokens. If the sheet's token count is below the max token count, the CSV is sent to the "generate_message_content" function (without a previous message) to generate the expected structure for the **"CSV Interpreter"** application, which provides a detailed explanation of the sheet. If the max token count is exceeded, the sheet is sent to the "extract_long_sheet_page" function.
 
-S'il y a des images dans le fichier, elles sont envoyé à l'application **"OCR Figure"**.
+If there are images in the file, they are sent to the **"OCR Figure"** application.
 
-Si le type du resultat est une liste (résultat de la fonction "extract_long_sheet_page") alors, il est directement ajouté à la liste du résultat final. Sinon, on va utiliser la fonction "find_value_in dict" afin de récuperer le résultat de CSV Interpreter et de OCR Figure, qui vont se retrouver dans un dictionnaire s'il n'y a pas eu de découpage du fichier. 
+If the result type is a list (result from the "extract_long_sheet_page" function), it is directly added to the final result list. Otherwise, we use the "find_value_in_dict" function to retrieve the results from CSV Interpreter and OCR Figure, which will be in a dictionary if the file was not split.
 
 #### extract_long_sheet_page
 
-La fonction "extract_long_sheet_page" prend entrée une feuille du fichier CSV ainsi que son index et retourne le résultat dans une liste et l'index. 
+The "extract_long_sheet_page" function takes a CSV file sheet and its index as input and returns the result in a list and the index.
 
-On va tout d'abord séparer la feuille en fonction des lignes complètement vide grâce à la fonction "split_with_empty_line". Ensuite, le CSV séparé sera envoyé à la fonction "split_everything_with_max_token" pour séprarer la feuille en fonction du nombre maximum de token prédéfini. 
+First, we split the sheet based on completely empty lines using the "split_with_empty_line" function. Then, the split CSV is sent to the "split_everything_with_max_token" function to separate the sheet based on the predefined maximum number of tokens.
 
-Pour chaque élément dans la liste de la feuille séparé, la fonction "generate_message_content" sera appliquer mais cette fois avec l'ancien message afin de garder le contexte du fichier et ne pas perdre le sens. 
+For each element in the split sheet list, the "generate_message_content" function is applied, but this time with the previous message to maintain the file context and not lose the meaning.
 
-Le résultat ainsi que l'index de la page seront envoyé à l'application **"CSV Interpreter"**. Le résultat est ensuite envoyé à la fonction "find_value_in_dict" puis retourner sous forme de liste avec l'index de la page. 
+The result and the page index are sent to the **"CSV Interpreter"** application. The result is then sent to the "find_value_in_dict" function and returned as a list with the page index.
 
 #### split_everything_with_max_token
 
-La fonction "split_everything_with_max_token" prend entrée la liste avec les éléments de la feuille excel spliter en fonction des lignes vide ainsi que le nombre maximum de token. Elle retourne une liste avec les éléments spliter en fonction du nombre pas de token. 
+The "split_everything_with_max_token" function takes the list with split elements of the Excel sheet based on empty lines and the maximum number of tokens as input. It returns a list with elements split based on the number of tokens.
 
-On va tout d'abord calculer le nombre de token pour chaque élément de la liste. Si un élément est supérieur au max de token, il est renvoyé en mode récursif à la fonction "split_everything_with_max_token" avec en entrée l'élément spliter en fonction des sauts de ligne car le type de l'entrée est une liste. 
+First, we calculate the number of tokens for each element in the list. If an element exceeds the max token count, it is recursively sent to the "split_everything_with_max_token" function with the element split based on line breaks, as the input type is a list.
 
-Ensuite, si le nombre de token de l'élément est respecté, il est ajouté à la liste du résultat.
+If the token count of the element is within the limit, it is added to the result list.
 
 #### generate_message_content
 
-La fonction "generate_message_content" prend en entrée le contenue CSV ainsi que le messages précedent. Elle retourne le message précedent + le nouveau message. 
+The "generate_message_content" function takes the CSV content and the previous messages as input. It returns the previous message plus the new message.
 
-Cette fonction sert à structurer le message qui sera envoyé à l'application **"CSV Interpreter"** ainsi qu'à garder le contexte de la feuille. Le message précedent ainsi que le nouveau message seront envoyé à **"CSV Interpreter"** afin que Claude 3 puisse avoir le contexte (header, légende...) et expliquer au mieux les éléments. 
-
+This function structures the message to be sent to the **"CSV Interpreter"** application and maintains the sheet context. The previous message and the new message are sent to **"CSV Interpreter"** so that Claude 3 can have the context (header, legend...) and provide the best explanation of the elements.
