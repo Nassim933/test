@@ -59,7 +59,7 @@ Value: a PDF file
 
 a string list of content recognition
 
-```
+```json
 [
     {
         "R0Y0T0dFRDZESUZSNVdIQUJIVExTVEZWNzY1NkdLTjMucGRm—7b6f4703747ebe5debe54647754e89f86695d19b7c5792e7ba81956ac63af664—page0": [
@@ -77,7 +77,7 @@ a string list of content recognition
 
 ## Controller
 
-![alt text](<Graph/Exctract_scan_graph.png>)
+![alt text](<Graph/Extract_scan_graph.png>)
 
 The name and body of the PDF file are sent to the **"Controller"** class along with the list of page numbers detected as "scanned PDFs". The PDF will be divided into blocks of 10 pages to be processed simultaneously. It is then converted to base 64 to be sent to the "all_ocr_process" function.
 
