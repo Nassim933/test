@@ -1,4 +1,4 @@
-# Extract XLS
+# Extract Excel
 
 ### Description
 
