@@ -56,7 +56,7 @@ python app.py
 
 #### Error Code
 
-500 : Error in form data
+500 : Error in form data  
 415 : Format not allowed or unsupported
 
 #### Input
