@@ -1,4 +1,4 @@
-# Exctract Word
+# Extract Word
 
 ### Description
 
